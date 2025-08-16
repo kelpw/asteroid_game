@@ -1,22 +1,41 @@
 import pygame
 from constants import *
+from circleshape import *  # Make sure this imports your Player subclass
 
 
 def main():
     pygame.init()
-    print("Starting Asteroids!")
-    print(f"Screen width: {SCREEN_WIDTH}")
-    print(f"Screen height: {SCREEN_HEIGHT}")
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    def fill(self,color):
-        self.color = color
+    clock = pygame.time.Clock()
+
+    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    updatable.add(player)
+    drawable.add(player)
+    
     running = True
     while running:
+        dt = clock.tick(60) / 1000  # Calculate delta time at the start of the loop
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False        
-        screen.fill((0, 0, 0))  # Fill screen black
-        pygame.display.flip()   # Update the screen
+                running = False
+
+        # Update player (rotation)
+        for obj in updatable:
+            obj.update(dt)
+
+        # Clear screen
+        screen.fill((0, 0, 0))
+
+        # Draw player
+        for obj in drawable:
+            obj.draw(screen)
+
+        # Update display
+        pygame.display.flip()
 
     pygame.quit()
 
