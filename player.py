@@ -22,3 +22,4 @@ class Player(CircleShape):
            self.rotation -= PLAYER_TURN_SPEED * dt #turn left
         if keys[pygame.K_d]:
            self.rotation += PLAYER_TURN_SPEED * dt #turn right
+    

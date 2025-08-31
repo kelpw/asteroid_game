@@ -1,7 +1,8 @@
 import pygame
 from constants import *
 from circleshape import *  # Make sure this imports your Player subclass
-
+from asteroid import Asteroid
+from asteroidfield import *
 
 def main():
     pygame.init()
@@ -14,7 +15,9 @@ def main():
     drawable = pygame.sprite.Group()
     updatable.add(player)
     drawable.add(player)
-    
+    asteroids = pygame.sprite.Group()
+    Asteroid.containers = (updatable, drawable, asteroids)
+
     running = True
     while running:
         dt = clock.tick(60) / 1000  # Calculate delta time at the start of the loop
