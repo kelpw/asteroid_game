@@ -1,8 +1,9 @@
 import pygame
 from constants import *
-from circleshape import *  # Make sure this imports your Player subclass
+from circleshape import *  
 from asteroid import Asteroid
 from asteroidfield import *
+from shooting import *
 
 def main():
     pygame.init()
@@ -12,9 +13,11 @@ def main():
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
+    shots = pygame.sprite.Group()
     Player.containers = (updatable, drawable)
     Asteroid.containers = (updatable, drawable, asteroids)
     AsteroidField.containers = (updatable,)
+    Shot.containers = (updatable, drawable, shots)
     
     
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
@@ -40,6 +43,13 @@ def main():
                 print("Game over!")
                 pygame.quit()
                 exit()
+
+        #Check collision for asteroids and bullets:
+        for asteroid in asteroids:
+            for shot in shots.sprites():
+                if shot.collision(asteroid):
+                    shot.kill()
+                    asteroid.kill()
 
 
 
