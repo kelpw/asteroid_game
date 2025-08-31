@@ -32,6 +32,16 @@ def main():
         # Update player (rotation)
         for obj in updatable:
             obj.update(dt)
+        
+
+        #Check for player collision:
+        for asteroid in asteroids:
+            if player.collision(asteroid):
+                print("Game over!")
+                pygame.quit()
+                exit()
+
+
 
         # Clear screen
         screen.fill((0, 0, 0))
